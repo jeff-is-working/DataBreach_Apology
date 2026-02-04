@@ -17,11 +17,11 @@ export const breachTypeOptions: WheelOption<BreachType>[] = [
   { value: 'lost_laptop', label: 'Lost/Stolen Laptop', probability: 0.04 },
   { value: 'phishing', label: 'Phishing Compromise', probability: 0.10 },
   { value: 'zero_day', label: 'Zero-Day Exploit', probability: 0.02 },
-  // Real-world inspired additions
-  { value: 'unpatched_vulnerability', label: 'Unpatched Known Vulnerability', probability: 0.15, description: 'Equifax-style: patch available for months' },
-  { value: 'plaintext_passwords', label: 'Plaintext Password Storage', probability: 0.05, description: 'Facebook-style: passwords stored unencrypted' },
+  // Additional breach types
+  { value: 'unpatched_vulnerability', label: 'Unpatched Known Vulnerability', probability: 0.15, description: 'Patch available for months but never applied' },
+  { value: 'plaintext_passwords', label: 'Plaintext Password Storage', probability: 0.05, description: 'Passwords stored without any encryption' },
   { value: 'credential_stuffing', label: 'Credential Stuffing Attack', probability: 0.06 },
-  { value: 'third_party_vendor', label: 'Third-Party Vendor Compromise', probability: 0.08, description: 'Target-style: vendor access exploited' },
+  { value: 'third_party_vendor', label: 'Third-Party Vendor Compromise', probability: 0.08, description: 'Third-party vendor access exploited' },
   { value: 'api_exposure', label: 'Exposed API Endpoint', probability: 0.04 },
   { value: 'backup_exposure', label: 'Exposed Backup Files', probability: 0.03 },
   { value: 'default_credentials', label: 'Default Credentials Left Unchanged', probability: 0.02 },
@@ -36,19 +36,19 @@ export const recordScaleOptions: WheelOption<RecordScale>[] = [
   { value: 'medium', label: '10,001 - 100,000', probability: 0.25 },
   { value: 'large', label: '100,001 - 1 Million', probability: 0.22 },
   { value: 'massive', label: '1 - 10 Million', probability: 0.15 },
-  { value: 'epic', label: '10 - 100 Million', probability: 0.10, description: 'T-Mobile territory' },
-  { value: 'legendary', label: '100 Million+', probability: 0.05, description: 'Equifax/Yahoo territory' },
-  { value: 'all_of_them', label: 'All of Them', probability: 0.01, description: 'Yahoo 2013: literally 3 billion' },
+  { value: 'epic', label: '10 - 100 Million', probability: 0.10, description: 'Major telecom breach territory' },
+  { value: 'legendary', label: '100 Million+', probability: 0.05, description: 'Credit bureau breach territory' },
+  { value: 'all_of_them', label: 'All of Them', probability: 0.01, description: 'Literally billions of accounts' },
 ];
 
 export const dataTypeOptions: WheelOption<DataType>[] = [
   { value: 'email', label: 'Email Addresses', probability: 0.16 },
   { value: 'password', label: 'Passwords (hashed... probably)', probability: 0.10 },
-  { value: 'plaintext_password', label: 'Passwords (stored in PLAINTEXT)', probability: 0.04, description: 'Facebook 2019 special' },
+  { value: 'plaintext_password', label: 'Passwords (stored in PLAINTEXT)', probability: 0.04, description: 'No hashing whatsoever' },
   { value: 'credit_card', label: 'Credit Card Numbers', probability: 0.12 },
   { value: 'ssn', label: 'Social Security Numbers', probability: 0.12 },
   { value: 'drivers_license', label: "Driver's License Numbers", probability: 0.08 },
-  { value: 'passport', label: 'Passport Numbers', probability: 0.04, description: 'Marriott special' },
+  { value: 'passport', label: 'Passport Numbers', probability: 0.04, description: 'Travel document data' },
   { value: 'medical', label: 'Medical Records', probability: 0.08 },
   { value: 'biometric', label: 'Biometric Data', probability: 0.03 },
   { value: 'financial_records', label: 'Financial Records', probability: 0.06 },
@@ -56,7 +56,7 @@ export const dataTypeOptions: WheelOption<DataType>[] = [
   { value: 'private_messages', label: 'Private Messages', probability: 0.03 },
   { value: 'security_questions', label: 'Security Questions & Answers', probability: 0.03 },
   // Rare/absurd
-  { value: 'dna', label: 'DNA Sequences', probability: 0.02, description: '23andMe special' },
+  { value: 'dna', label: 'DNA Sequences', probability: 0.02, description: 'Genetic testing data' },
   { value: 'browser_history', label: 'Browser History', probability: 0.02 },
   { value: 'therapy_notes', label: 'Therapy Session Notes', probability: 0.01 },
   { value: 'how_to_secure_search', label: '"How to Secure a Database" Searches', probability: 0.01 },
@@ -66,21 +66,21 @@ export const dataTypeOptions: WheelOption<DataType>[] = [
 export const industryOptions: WheelOption<Industry>[] = [
   { value: 'healthcare', label: 'Healthcare', probability: 0.12 },
   { value: 'financial', label: 'Financial Services', probability: 0.10 },
-  { value: 'credit_bureau', label: 'Credit Bureau', probability: 0.04, description: 'Equifax territory' },
+  { value: 'credit_bureau', label: 'Credit Bureau', probability: 0.04, description: 'Credit reporting agencies' },
   { value: 'retail', label: 'Retail', probability: 0.12 },
   { value: 'technology', label: 'Technology', probability: 0.12 },
-  { value: 'social_media', label: 'Social Media Platform', probability: 0.08, description: 'Facebook/Meta territory' },
-  { value: 'telecom', label: 'Telecommunications', probability: 0.08, description: 'T-Mobile territory' },
-  { value: 'hospitality', label: 'Hospitality/Hotels', probability: 0.06, description: 'Marriott territory' },
+  { value: 'social_media', label: 'Social Media Platform', probability: 0.08, description: 'Social networking platforms' },
+  { value: 'telecom', label: 'Telecommunications', probability: 0.08, description: 'Mobile carriers and ISPs' },
+  { value: 'hospitality', label: 'Hospitality/Hotels', probability: 0.06, description: 'Hotel chains and resorts' },
   { value: 'government', label: 'Government', probability: 0.08 },
   { value: 'education', label: 'Education', probability: 0.06 },
   { value: 'gaming', label: 'Gaming/Entertainment', probability: 0.04 },
   // Ironic industries
-  { value: 'dating', label: 'Dating Site', probability: 0.03, description: 'Ashley Madison special' },
+  { value: 'dating', label: 'Dating Site', probability: 0.03, description: 'Romance and dating platforms' },
   { value: 'toys', label: "Kids' Toy Manufacturer", probability: 0.02 },
   { value: 'security_company', label: 'Security Company', probability: 0.02, description: 'Maximum irony' },
   { value: 'cybersecurity_training', label: 'Cybersecurity Training Platform', probability: 0.02, description: 'Peak irony' },
-  { value: 'password_manager', label: 'Password Manager', probability: 0.01, description: 'LastPass territory' },
+  { value: 'password_manager', label: 'Password Manager', probability: 0.01, description: 'Maximum irony territory' },
 ];
 
 export const discoveryDelayOptions: WheelOption<DiscoveryDelay>[] = [
@@ -90,7 +90,7 @@ export const discoveryDelayOptions: WheelOption<DiscoveryDelay>[] = [
   { value: 'months_3_6', label: '3-6 Months', probability: 0.18 },
   { value: 'months_6_12', label: '6-12 Months', probability: 0.15 },
   { value: 'years_1_2', label: '1-2 Years', probability: 0.12 },
-  { value: 'years_3_plus', label: '3+ Years', probability: 0.08, description: 'Yahoo/Marriott territory' },
+  { value: 'years_3_plus', label: '3+ Years', probability: 0.08, description: 'Multi-year undetected breach' },
   // Embarrassing discovery methods
   { value: 'from_news', label: 'Learned From The News', probability: 0.03 },
   { value: 'security_researcher', label: 'Security Researcher Told Us', probability: 0.025 },
@@ -109,7 +109,7 @@ export const toneOptions: WheelOption<Tone>[] = [
 
 // New: Negligence factors for YOLO mode
 export const negligenceOptions: WheelOption<NegligenceFactor>[] = [
-  { value: 'patch_available_months', label: 'Patch Available for Months', probability: 0.20, description: 'Equifax classic' },
+  { value: 'patch_available_months', label: 'Patch Available for Months', probability: 0.20, description: 'Credit bureau classic move' },
   { value: 'patch_available_years', label: 'Patch Available for YEARS', probability: 0.05 },
   { value: 'ignored_security_warnings', label: 'Ignored Security Warnings', probability: 0.15 },
   { value: 'disabled_security_tools', label: 'Disabled Security Tools', probability: 0.08 },
@@ -236,7 +236,7 @@ export const displayLabels = {
 export const ironicCombinations = {
   'security_company': { combo: 'Maximum Irony Mode', description: 'Security company gets breached' },
   'cybersecurity_training': { combo: 'Peak Irony Mode', description: 'Cybersecurity training platform fails at security' },
-  'password_manager': { combo: 'LastPass Special', description: 'Password manager loses passwords' },
-  'credit_bureau_unpatched': { combo: 'The Equifax Special', description: 'Credit bureau ignores patches for months' },
-  'social_media_plaintext': { combo: 'The Facebook Oopsie', description: 'Social media stores passwords in plaintext' },
+  'password_manager': { combo: 'The Vault Keeper Irony', description: 'Password manager loses passwords' },
+  'credit_bureau_unpatched': { combo: 'The Credit Bureau Classic', description: 'Credit bureau ignores patches for months' },
+  'social_media_plaintext': { combo: 'The Plaintext Password Special', description: 'Social media stores passwords in plaintext' },
 };

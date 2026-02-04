@@ -9,11 +9,11 @@ export type BreachType =
   | 'password_postit'
   | 'tweeted_backup'
   | 'ceo_son_testing'
-  // New types based on real breaches
-  | 'unpatched_vulnerability'  // Equifax-style
-  | 'plaintext_passwords'      // Facebook-style
+  // Additional breach types
+  | 'unpatched_vulnerability'  // Known vulnerability left unpatched
+  | 'plaintext_passwords'      // Passwords stored without hashing
   | 'credential_stuffing'
-  | 'third_party_vendor'       // Target-style
+  | 'third_party_vendor'       // Vendor access exploited
   | 'api_exposure'
   | 'backup_exposure'
   | 'default_credentials';
@@ -50,11 +50,11 @@ export type Industry =
   | 'toys'
   | 'security_company'
   | 'cybersecurity_training'
-  // New industries
-  | 'credit_bureau'            // Equifax-style
-  | 'social_media'             // Facebook-style
-  | 'telecom'                  // T-Mobile-style
-  | 'hospitality'              // Marriott-style
+  // Additional industries
+  | 'credit_bureau'            // Credit reporting agencies
+  | 'social_media'             // Social platforms
+  | 'telecom'                  // Telecommunications
+  | 'hospitality'              // Hotels and hospitality
   | 'gaming'
   | 'password_manager';        // Maximum irony
 
@@ -89,9 +89,9 @@ export type DiscoveryDelay =
   | 'security_researcher'      // Reported by external researcher
   | 'dark_web_listing';        // Found data for sale
 
-// New type: Root cause negligence factors (inspired by real breaches)
+// Root cause negligence factors
 export type NegligenceFactor =
-  | 'patch_available_months'   // Equifax: patch available 2+ months
+  | 'patch_available_months'   // Patch available for months before breach
   | 'patch_available_years'    // Even worse
   | 'ignored_security_warnings'
   | 'disabled_security_tools'
@@ -155,77 +155,68 @@ export interface SpinState {
   };
 }
 
-// Famous breach templates for jackpot mode
-export interface FamousBreachTemplate {
+// Breach scenario templates for jackpot mode
+export interface BreachScenarioTemplate {
   name: string;
-  company: string;
-  year: number;
+  scenario: string;
   records: RecordScale;
   description: string;
   ironyFactor: string;
 }
 
-export const famousBreaches: FamousBreachTemplate[] = [
+export const breachScenarios: BreachScenarioTemplate[] = [
   {
-    name: 'The Equifax Special',
-    company: 'Equifax',
-    year: 2017,
+    name: 'The Credit Bureau Classic',
+    scenario: 'Credit Bureau Breach',
     records: 'legendary',
-    description: '147 million records exposed via unpatched vulnerability',
-    ironyFactor: 'Patch was available for 2+ months; executives sold stock before disclosure',
+    description: 'Massive records exposed via unpatched vulnerability',
+    ironyFactor: 'Patch was available for months; executives sold stock before disclosure',
   },
   {
-    name: 'The Facebook Oopsie',
-    company: 'Facebook',
-    year: 2019,
+    name: 'The Plaintext Password Special',
+    scenario: 'Social Platform Breach',
     records: 'legendary',
-    description: '600 million passwords stored in plaintext since 2012',
-    ironyFactor: '20,000 employees could search the plaintext passwords',
+    description: 'Hundreds of millions of passwords stored in plaintext for years',
+    ironyFactor: 'Thousands of employees could search the plaintext passwords',
   },
   {
-    name: 'The Target Special',
-    company: 'Target',
-    year: 2013,
+    name: 'The Vendor Breach Special',
+    scenario: 'Retail Chain Breach',
     records: 'epic',
-    description: '40 million credit cards via HVAC vendor access',
+    description: 'Millions of credit cards via third-party vendor access',
     ironyFactor: 'Attackers used an HVAC contractor\'s credentials',
   },
   {
-    name: 'The Yahoo Trilogy',
-    company: 'Yahoo',
-    year: 2013,
+    name: 'The Billion Record Bonanza',
+    scenario: 'Internet Giant Breach',
     records: 'all_of_them',
-    description: '3 billion accounts - literally all of them',
-    ironyFactor: 'Took 3 years to disclose; discovered during Verizon acquisition',
+    description: 'Billions of accounts - literally all of them',
+    ironyFactor: 'Took years to disclose; discovered during acquisition',
   },
   {
-    name: 'The Marriott Marathon',
-    company: 'Marriott',
-    year: 2018,
+    name: 'The Multi-Year Discovery',
+    scenario: 'Hotel Chain Breach',
     records: 'legendary',
-    description: '500 million guest records from Starwood acquisition',
-    ironyFactor: 'Breach started in 2014, discovered in 2018',
+    description: 'Hundreds of millions of guest records from acquired company',
+    ironyFactor: 'Breach ran for 4+ years before discovery',
   },
   {
-    name: 'The T-Mobile Repeat',
-    company: 'T-Mobile',
-    year: 2021,
+    name: 'The Serial Offender',
+    scenario: 'Telecom Breach',
     records: 'epic',
-    description: '76 million records - their 5th major breach',
+    description: 'Tens of millions of records - not their first rodeo',
     ironyFactor: 'Multiple breaches, each time promising to do better',
   },
   {
-    name: 'The LastPass Irony',
-    company: 'LastPass',
-    year: 2022,
+    name: 'The Vault Keeper Irony',
+    scenario: 'Password Manager Breach',
     records: 'massive',
     description: 'Password manager loses encrypted vaults',
     ironyFactor: 'A password manager getting breached',
   },
   {
-    name: 'The 23andMe Genetic Lottery',
-    company: '23andMe',
-    year: 2023,
+    name: 'The Genetic Data Disaster',
+    scenario: 'DNA Testing Breach',
     records: 'massive',
     description: 'DNA and ancestry data exposed',
     ironyFactor: 'Your literal genetic code is now out there',

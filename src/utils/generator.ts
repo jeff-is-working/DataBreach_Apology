@@ -69,28 +69,28 @@ function calculateIronyScore(params: BreachParameters): number {
   return Math.min(irony, 100);
 }
 
-// Check for special combo conditions based on real breaches
+// Check for special combo conditions (generic names, no real companies)
 function checkCombo(params: BreachParameters): string | undefined {
-  // The Equifax Special: Credit bureau + unpatched vulnerability + massive scale
+  // Credit Bureau Classic: Credit bureau + unpatched vulnerability + massive scale
   if (
     params.industry === 'credit_bureau' &&
     params.breachType === 'unpatched_vulnerability' &&
     ['massive', 'epic', 'legendary'].includes(params.affectedRecords)
   ) {
-    return 'The Equifax Special';
+    return 'The Credit Bureau Classic';
   }
 
-  // The Facebook Oopsie: Social media + plaintext passwords
+  // Plaintext Password Special: Social media + plaintext passwords
   if (
     params.industry === 'social_media' &&
     (params.breachType === 'plaintext_passwords' || params.dataTypes.includes('plaintext_password'))
   ) {
-    return 'The Facebook Oopsie';
+    return 'The Plaintext Password Special';
   }
 
-  // The LastPass Irony: Password manager breach
+  // Vault Keeper Irony: Password manager breach
   if (params.industry === 'password_manager') {
-    return 'The LastPass Special';
+    return 'The Vault Keeper Irony';
   }
 
   // Maximum Irony: Security company or cybersecurity training gets breached
@@ -101,25 +101,25 @@ function checkCombo(params: BreachParameters): string | undefined {
     return 'Maximum Irony Mode';
   }
 
-  // The Target Special: Third-party vendor compromise in retail
+  // Vendor Breach Special: Third-party vendor compromise in retail
   if (params.industry === 'retail' && params.breachType === 'third_party_vendor') {
-    return 'The Target Special';
+    return 'The Vendor Breach Special';
   }
 
-  // The Marriott Marathon: Hospitality + years-long breach
+  // Multi-Year Discovery: Hospitality + years-long breach
   if (
     params.industry === 'hospitality' &&
     ['years_1_2', 'years_3_plus'].includes(params.discoveryDelay)
   ) {
-    return 'The Marriott Marathon';
+    return 'The Multi-Year Discovery';
   }
 
-  // The Yahoo Trilogy: All records + years to disclose
+  // Billion Record Bonanza: All records + years to disclose
   if (
     params.affectedRecords === 'all_of_them' &&
     ['years_1_2', 'years_3_plus'].includes(params.discoveryDelay)
   ) {
-    return 'The Yahoo Trilogy';
+    return 'The Billion Record Bonanza';
   }
 
   // Legal Nightmare Mode: Long delay with SSNs
@@ -135,9 +135,9 @@ function checkCombo(params: BreachParameters): string | undefined {
     return 'COPPA Catastrophe';
   }
 
-  // Ashley Madison Mode: Dating site breach
+  // Dating Site Disaster: Dating site breach with private messages
   if (params.industry === 'dating' && params.dataTypes.includes('private_messages')) {
-    return 'Ashley Madison Mode';
+    return 'The Dating Site Disaster';
   }
 
   // Public Humiliation Mode: Found out from external sources
@@ -145,26 +145,31 @@ function checkCombo(params: BreachParameters): string | undefined {
     return 'Public Humiliation Mode';
   }
 
-  // The 23andMe Special: DNA data breach
+  // Genetic Data Disaster: DNA data breach
   if (params.dataTypes.includes('dna')) {
-    return 'The 23andMe Special';
+    return 'The Genetic Data Disaster';
+  }
+
+  // Serial Offender: Telecom with prior breaches
+  if (params.industry === 'telecom' && params.priorBreaches && params.priorBreaches > 2) {
+    return 'The Serial Offender';
   }
 
   return undefined;
 }
 
-// Check for jackpot scenarios (rare famous breach recreations)
+// Check for jackpot scenarios (rare breach pattern recreations)
 function checkJackpot(): { isJackpot: boolean; jackpotType?: string } {
   const roll = Math.random();
   if (roll < 0.02) { // 2% chance for demo purposes
     const jackpots = [
-      'The Equifax Special',
-      'The Facebook Oopsie',
-      'The Yahoo Trilogy',
-      'The Target Classic',
-      'The Marriott Marathon',
-      'The T-Mobile Repeat',
-      'The LastPass Irony',
+      'The Credit Bureau Classic',
+      'The Plaintext Password Special',
+      'The Billion Record Bonanza',
+      'The Vendor Breach Special',
+      'The Multi-Year Discovery',
+      'The Serial Offender',
+      'The Vault Keeper Irony',
       'The Honest One', // Rare: actually transparent apology
       'The Non-Apology Apology',
       'The Haiku',

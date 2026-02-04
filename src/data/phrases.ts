@@ -1,5 +1,5 @@
 // Common phrases extracted from real data breach apologies
-// Sources: Equifax, Target, Yahoo, Marriott, T-Mobile, Facebook, and hundreds of others
+// Sources: Public breach notification letters and corporate security incident disclosures
 
 export const openingPhrases = [
   "We are writing to inform you of a data security incident that may have affected your personal information.",
@@ -373,38 +373,38 @@ export const toneModifiers = {
   },
 };
 
-// NEW: Famous breach references for jackpot mode
-export const famousBreachReferences = {
-  equifax: {
-    settlement: "$700 million",
-    records: "147 million",
-    irony: "patch was available for 2+ months",
-    disclosure_delay: "6 weeks",
+// Breach scenario statistics for jackpot mode (anonymized)
+export const breachScenarioStats = {
+  creditBureauClassic: {
+    typicalSettlement: "$500-700 million",
+    typicalRecords: "100-150 million",
+    commonIrony: "patch was available for months",
+    typicalDelay: "weeks to disclose",
   },
-  facebook: {
-    settlement: "€91 million",
-    records: "600 million passwords",
-    irony: "stored in plaintext since 2012",
-    employees_with_access: "20,000+",
+  plaintextPasswordSpecial: {
+    typicalSettlement: "$50-100 million",
+    typicalRecords: "hundreds of millions",
+    commonIrony: "stored in plaintext for years",
+    internalAccess: "thousands of employees",
   },
-  yahoo: {
-    records: "3 billion",
-    irony: "took 3 years to disclose",
-    discovery: "during Verizon acquisition",
+  billionRecordBonanza: {
+    typicalRecords: "billions",
+    commonIrony: "took years to disclose",
+    discoveryMethod: "during acquisition due diligence",
   },
-  target: {
-    settlement: "$18.5 million",
-    records: "40 million credit cards",
-    irony: "HVAC vendor credentials",
+  vendorBreachSpecial: {
+    typicalSettlement: "$10-20 million",
+    typicalRecords: "tens of millions of cards",
+    commonIrony: "third-party vendor credentials",
   },
-  marriott: {
-    records: "500 million",
-    irony: "breach started in 2014, discovered in 2018",
-    duration: "4 years undetected",
+  multiYearDiscovery: {
+    typicalRecords: "hundreds of millions",
+    commonIrony: "breach ran for years undetected",
+    typicalDuration: "3-4 years",
   },
-  tmobile: {
-    settlement: "$350 million",
-    records: "76 million",
-    irony: "their 5th major breach",
+  serialOffender: {
+    typicalSettlement: "$300-400 million",
+    typicalRecords: "50-100 million",
+    commonIrony: "multiple breaches, same promises",
   },
 };

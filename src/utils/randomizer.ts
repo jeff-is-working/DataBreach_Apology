@@ -202,29 +202,29 @@ export function generateRandomParameters(): BreachParameters {
   };
 }
 
-// Generate parameters for a specific famous breach recreation
-export function generateFamousBreachParams(breachName: string): BreachParameters {
+// Generate parameters for a specific breach scenario recreation
+export function generateBreachScenarioParams(scenarioName: string): BreachParameters {
   const baseParams = generateRandomParameters();
 
-  switch (breachName) {
-    case 'The Equifax Special':
+  switch (scenarioName) {
+    case 'The Credit Bureau Classic':
       return {
         ...baseParams,
-        companyName: 'EquiData Credit Bureau',
+        companyName: generateCompanyName(),
         industry: 'credit_bureau',
         breachType: 'unpatched_vulnerability',
         affectedRecords: 'legendary',
         dataTypes: ['ssn', 'credit_card', 'drivers_license', 'email'],
         discoveryDelay: 'months_3_6',
         tone: 'legally_cautious',
-        patchAvailableDays: 78, // Actual Equifax delay
+        patchAvailableDays: Math.floor(Math.random() * 60) + 60, // 60-120 days
         negligenceFactors: ['patch_available_months', 'ignored_security_warnings'],
       };
 
-    case 'The Facebook Oopsie':
+    case 'The Plaintext Password Special':
       return {
         ...baseParams,
-        companyName: 'SocialNet Platform',
+        companyName: generateCompanyName(),
         industry: 'social_media',
         breachType: 'plaintext_passwords',
         affectedRecords: 'legendary',
@@ -234,10 +234,10 @@ export function generateFamousBreachParams(breachName: string): BreachParameters
         negligenceFactors: ['no_encryption', 'excessive_data_retention'],
       };
 
-    case 'The Yahoo Trilogy':
+    case 'The Billion Record Bonanza':
       return {
         ...baseParams,
-        companyName: 'InternetGiant Corp',
+        companyName: generateCompanyName(),
         industry: 'technology',
         breachType: 'credential_stuffing',
         affectedRecords: 'all_of_them',
@@ -246,10 +246,10 @@ export function generateFamousBreachParams(breachName: string): BreachParameters
         tone: 'vaguely_reassuring',
       };
 
-    case 'The Target Classic':
+    case 'The Vendor Breach Special':
       return {
         ...baseParams,
-        companyName: 'MegaMart Retail',
+        companyName: generateCompanyName(),
         industry: 'retail',
         breachType: 'third_party_vendor',
         affectedRecords: 'epic',
@@ -259,16 +259,65 @@ export function generateFamousBreachParams(breachName: string): BreachParameters
         includeThirdPartyBlame: true,
       };
 
-    case 'The Marriott Marathon':
+    case 'The Multi-Year Discovery':
       return {
         ...baseParams,
-        companyName: 'LuxuryStay Hotels',
+        companyName: generateCompanyName(),
         industry: 'hospitality',
         breachType: 'insider_threat',
         affectedRecords: 'legendary',
         dataTypes: ['passport', 'credit_card', 'email', 'location_history'],
         discoveryDelay: 'years_3_plus',
         tone: 'professionally_concerned',
+      };
+
+    case 'The Serial Offender':
+      return {
+        ...baseParams,
+        companyName: generateCompanyName(),
+        industry: 'telecom',
+        breachType: 'credential_stuffing',
+        affectedRecords: 'epic',
+        dataTypes: ['ssn', 'email', 'location_history'],
+        discoveryDelay: 'months_3_6',
+        tone: 'aggressively_defensive',
+        priorBreaches: Math.floor(Math.random() * 3) + 3, // 3-5 prior breaches
+      };
+
+    case 'The Vault Keeper Irony':
+      return {
+        ...baseParams,
+        companyName: generateCompanyName(),
+        industry: 'password_manager',
+        breachType: 'backup_exposure',
+        affectedRecords: 'massive',
+        dataTypes: ['password', 'email', 'security_questions'],
+        discoveryDelay: 'months_1_3',
+        tone: 'technically_transparent',
+      };
+
+    case 'The Genetic Data Disaster':
+      return {
+        ...baseParams,
+        companyName: generateCompanyName(),
+        industry: 'healthcare',
+        breachType: 'credential_stuffing',
+        affectedRecords: 'massive',
+        dataTypes: ['dna', 'email', 'medical'],
+        discoveryDelay: 'months_1_3',
+        tone: 'professionally_concerned',
+      };
+
+    case 'The Dating Site Disaster':
+      return {
+        ...baseParams,
+        companyName: generateCompanyName(),
+        industry: 'dating',
+        breachType: 'api_exposure',
+        affectedRecords: 'epic',
+        dataTypes: ['email', 'private_messages', 'location_history'],
+        discoveryDelay: 'from_news',
+        tone: 'deeply_apologetic',
       };
 
     default:

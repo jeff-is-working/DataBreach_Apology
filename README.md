@@ -2,7 +2,7 @@
 
 A satirical web application that generates corporate-style data breach apology statements by analyzing and synthesizing patterns from real-world data breach apologies.
 
-**Live Demo:** [https://jeff-is-working.github.io/DataBreach_Apology/](https://jeff-is-working.github.io/DataBreach_Apology/)
+**Live Demo:** [https://oopsallbreaches.com](https://oopsallbreaches.com)
 
 ## Purpose
 
