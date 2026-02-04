@@ -120,6 +120,9 @@ export interface BreachParameters {
   includeExecutiveQuote: boolean;
   executiveName?: string;
   executiveTitle?: string;
+  // Tonal sliders (0-100)
+  sincerityLevel?: number;            // 0 = robotic/hollow, 100 = genuinely apologetic
+  shadinessLevel?: number;            // 0 = transparent, 100 = shady/evasive
   // New fields
   negligenceFactors?: NegligenceFactor[];
   patchAvailableDays?: number;        // How long patch was available before breach

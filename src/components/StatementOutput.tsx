@@ -6,17 +6,21 @@ interface StatementOutputProps {
   statement: GeneratedStatement | null;
 }
 
+// Check if Web Share API is available
+const canShare = typeof navigator !== 'undefined' && 'share' in navigator;
+
 export function StatementOutput({ statement }: StatementOutputProps) {
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   if (!statement) {
     return (
-      <div className="bg-gray-100 p-8 rounded-lg border-2 border-dashed border-gray-300 text-center">
-        <p className="text-gray-500">
+      <div className="bg-gray-100 dark:bg-gray-800 p-4 sm:p-8 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 text-center">
+        <p className="text-gray-500 dark:text-gray-400">
           Your generated apology statement will appear here.
         </p>
-        <p className="text-gray-400 text-sm mt-2">
-          Configure parameters on the left or hit YOLO for a random scenario.
+        <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">
+          Configure parameters above or hit YOLO for a random scenario.
         </p>
       </div>
     );
@@ -44,6 +48,31 @@ export function StatementOutput({ statement }: StatementOutputProps) {
     URL.revokeObjectURL(url);
   };
 
+  const handleShare = async () => {
+    if (!canShare) return;
+
+    const shareText = statement.text.length > 280
+      ? statement.text.slice(0, 277) + '...'
+      : statement.text;
+
+    const shareData = {
+      title: 'Data Breach Apology Generator',
+      text: `Check out this breach apology:\n\n${shareText}`,
+      url: 'https://oopsallbreaches.com'
+    };
+
+    try {
+      await navigator.share(shareData);
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
+    } catch (err) {
+      // User cancelled or share failed - ignore AbortError
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.error('Share failed:', err);
+      }
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,8 +80,8 @@ export function StatementOutput({ statement }: StatementOutputProps) {
       className="space-y-4"
     >
       {/* Metadata Bar */}
-      <div className="flex flex-wrap gap-2 items-center justify-between bg-gray-100 p-3 rounded-lg">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between bg-gray-100 dark:bg-gray-800 p-2 sm:p-3 rounded-lg">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           <span className="px-2 py-1 bg-corporate-blue text-white text-xs rounded">
             Authenticity: {statement.authenticityScore}%
           </span>
@@ -67,19 +96,30 @@ export function StatementOutput({ statement }: StatementOutputProps) {
             </span>
           )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 sm:gap-2">
           <button
+            type="button"
             onClick={handleCopy}
-            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm rounded transition-colors"
+            className="flex-1 sm:flex-none px-2 sm:px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-xs sm:text-sm rounded transition-colors"
           >
             {copied ? 'Copied!' : 'Copy'}
           </button>
           <button
+            type="button"
             onClick={handleDownload}
-            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm rounded transition-colors"
+            className="flex-1 sm:flex-none px-2 sm:px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-xs sm:text-sm rounded transition-colors"
           >
             Download
           </button>
+          {canShare && (
+            <button
+              type="button"
+              onClick={handleShare}
+              className="flex-1 sm:flex-none px-2 sm:px-3 py-1 bg-corporate-blue hover:bg-blue-700 text-white text-xs sm:text-sm rounded transition-colors"
+            >
+              {shared ? 'Shared!' : 'Share'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -95,18 +135,18 @@ export function StatementOutput({ statement }: StatementOutputProps) {
       </div>
 
       {/* Parameters Summary */}
-      <details className="bg-gray-50 p-4 rounded-lg">
-        <summary className="cursor-pointer font-semibold text-gray-700 hover:text-corporate-blue">
+      <details className="bg-gray-50 dark:bg-gray-800 p-3 sm:p-4 rounded-lg">
+        <summary className="cursor-pointer font-semibold text-sm sm:text-base text-gray-700 dark:text-gray-300 hover:text-corporate-blue dark:hover:text-blue-400">
           View Generation Parameters
         </summary>
-        <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-gray-600">
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
           <div><strong>Company:</strong> {statement.parameters.companyName}</div>
           <div><strong>Breach Type:</strong> {statement.parameters.breachType}</div>
           <div><strong>Industry:</strong> {statement.parameters.industry}</div>
           <div><strong>Records:</strong> {statement.parameters.affectedRecords}</div>
           <div><strong>Discovery:</strong> {statement.parameters.discoveryDelay}</div>
           <div><strong>Tone:</strong> {statement.parameters.tone}</div>
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <strong>Data Types:</strong> {statement.parameters.dataTypes.join(', ')}
           </div>
         </div>

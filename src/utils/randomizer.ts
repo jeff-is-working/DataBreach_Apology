@@ -195,6 +195,9 @@ export function generateRandomParameters(): BreachParameters {
     executiveName: generateExecutiveName(),
     executiveTitle: generateExecutiveTitle(),
     negligenceFactors: selectNegligenceFactors(),
+    // Tonal sliders - random values weighted toward middle/corporate defaults
+    sincerityLevel: Math.floor(Math.random() * 60) + 20, // 20-80, weighted toward corporate middle
+    shadinessLevel: Math.floor(Math.random() * 70) + 30, // 30-100, weighted toward more shady
     // Set patch available days for unpatched vulnerability breaches
     patchAvailableDays: breachType === 'unpatched_vulnerability'
       ? Math.floor(Math.random() * 180) + 30 // 30-210 days

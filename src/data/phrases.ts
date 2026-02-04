@@ -373,6 +373,75 @@ export const toneModifiers = {
   },
 };
 
+// Sincerity-based phrases (varies from hollow to genuine)
+export const sincerityPhrases = {
+  low: [ // 0-33: Hollow, robotic, clearly PR-written
+    "We regret to inform you of this incident.",
+    "We are notifying you as required by applicable regulations.",
+    "This communication serves to inform you of a data security matter.",
+    "As per our obligations, we are providing this notice.",
+    "We acknowledge an incident has occurred.",
+  ],
+  medium: [ // 34-66: Standard corporate apology
+    "We sincerely apologize for any concern this may cause.",
+    "We understand this may be frustrating and we apologize.",
+    "We regret any inconvenience this situation has caused.",
+    "We appreciate your patience as we address this matter.",
+    "We are sorry this has happened and are working to make it right.",
+  ],
+  high: [ // 67-100: Genuinely apologetic, human-sounding
+    "We are truly sorry. We failed to protect your information and there's no excuse for that.",
+    "We understand we have broken your trust, and we take full responsibility.",
+    "We owe you a sincere apology. This should never have happened.",
+    "We let you down, and we are deeply sorry for the real harm this may cause.",
+    "There is no way to sugarcoat this - we failed, and we are genuinely sorry.",
+  ],
+};
+
+// Shadiness-based phrases (varies from transparent to evasive)
+export const shadinessPhrases = {
+  low: [ // 0-33: Transparent, direct communication
+    "Here is exactly what happened: ",
+    "To be completely transparent with you: ",
+    "We want to be fully honest about what occurred: ",
+    "The facts are as follows: ",
+    "We owe you a clear and honest explanation: ",
+  ],
+  medium: [ // 34-66: Standard corporate vagueness
+    "After completing our investigation, we determined that ",
+    "Based on our analysis, it appears that ",
+    "Our review indicates that certain information ",
+    "We have learned that an incident occurred involving ",
+    "Our investigation revealed that ",
+  ],
+  high: [ // 67-100: Evasive, obfuscating, shady
+    "A recent security event may have potentially involved ",
+    "Certain limited data elements may have been subject to access by ",
+    "We have become aware of a situation that might have involved ",
+    "A subset of information may have been impacted by an event that ",
+    "In an isolated incident, it is possible that certain data ",
+  ],
+};
+
+// Shadiness timeline obfuscation (more shady = more vague about timing)
+export const shadinessTimeline = {
+  low: [
+    "On [DATE], we discovered that on [DATE], attackers accessed our systems.",
+    "The breach occurred on [DATE]. We discovered it on [DATE].",
+    "Timeline: breach began [DATE], detected [DATE], contained [DATE].",
+  ],
+  medium: [
+    "Upon discovery of the incident, we immediately took action.",
+    "After completing our investigation, we are now notifying affected individuals.",
+    "Once we confirmed the nature of the incident, we began our notification process.",
+  ],
+  high: [
+    "We recently became aware of an incident that may have occurred at some point.",
+    "After a thorough review, we determined notification was appropriate.",
+    "Following an extensive investigation, we are now in a position to provide this notice.",
+  ],
+};
+
 // Breach scenario statistics for jackpot mode (anonymized)
 export const breachScenarioStats = {
   creditBureauClassic: {

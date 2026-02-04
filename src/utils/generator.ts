@@ -13,6 +13,9 @@ import {
   executiveQuotes,
   ironicSecurityClaims,
   actualNegligence,
+  sincerityPhrases,
+  shadinessPhrases,
+  shadinessTimeline,
 } from '../data/phrases';
 import { displayLabels } from '../data/wheelOptions';
 
@@ -29,6 +32,20 @@ function sanitizeInput(input: string): string {
 // Helper to pick random item from array
 function randomPick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Get sincerity tier based on level (0-100)
+function getSincerityTier(level: number): 'low' | 'medium' | 'high' {
+  if (level <= 33) return 'low';
+  if (level <= 66) return 'medium';
+  return 'high';
+}
+
+// Get shadiness tier based on level (0-100)
+function getShadinessTier(level: number): 'low' | 'medium' | 'high' {
+  if (level <= 33) return 'low';
+  if (level <= 66) return 'medium';
+  return 'high';
 }
 
 // Format data types for display
@@ -224,6 +241,10 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   const industry = sanitizedParams.industry;
   const ironyScore = calculateIronyScore(sanitizedParams);
 
+  // Get tonal slider tiers (default to medium if not set)
+  const sincerityTier = getSincerityTier(sanitizedParams.sincerityLevel ?? 50);
+  const shadinessTier = getShadinessTier(sanitizedParams.shadinessLevel ?? 50);
+
   // Get today's date for the statement
   const today = new Date();
   const dateStr = today.toLocaleDateString('en-US', {
@@ -239,8 +260,12 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   sections.push(`${dateStr}\n`);
   sections.push(`Dear Valued ${getGreeting(industry)},\n`);
 
-  // Opening statement based on tone
+  // Opening statement based on tone and shadiness
+  const shadyOpening = randomPick(shadinessPhrases[shadinessTier]);
   sections.push(`${randomPick(tone.opening)}\n`);
+
+  // Sincerity-based apology phrase
+  sections.push(`${randomPick(sincerityPhrases[sincerityTier])}\n`);
 
   // Taking it seriously (with extra irony if applicable)
   if (ironyScore > 50) {
@@ -263,8 +288,11 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
     negligenceNote = ' ' + randomPick(actualNegligence.plaintext);
   }
 
+  // Use shadiness-based timeline description
+  const timelineIntro = randomPick(shadinessTimeline[shadinessTier]);
   sections.push(
-    `Our security team identified unauthorized access to our systems ${discoveryTime}. ` +
+    `${shadyOpening}` +
+    `${timelineIntro.replace('[DATE]', discoveryTime)} ` +
     `The incident involved ${breachDescription.startsWith('a') || breachDescription.startsWith('an') ? '' :
       ['ransomware', 'unpatched', 'exposed', 'insider'].some(w => breachDescription.includes(w)) ? '' : 'a '}${breachDescription}` +
     `${sanitizedParams.includeSophisticatedAttack ? '. ' + randomPick(sophisticatedAttackPhrases) : '.'}${negligenceNote}\n`
@@ -351,7 +379,11 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   if (sanitizedParams.includeNoEvidenceOfMisuse) authenticityScore += 5;
   if (sanitizedParams.includeSophisticatedAttack) authenticityScore += 5;
   if (sanitizedParams.includeThirdPartyBlame) authenticityScore += 5;
-  authenticityScore = Math.min(authenticityScore, 99);
+  // Shadiness increases authenticity (more corporate-speak), sincerity decreases it
+  const shadinessBonus = Math.floor((sanitizedParams.shadinessLevel ?? 50) / 10);
+  const sincerityPenalty = Math.floor((sanitizedParams.sincerityLevel ?? 50) / 20);
+  authenticityScore = authenticityScore + shadinessBonus - sincerityPenalty;
+  authenticityScore = Math.max(10, Math.min(authenticityScore, 99));
 
   return {
     text: sections.join('\n'),
