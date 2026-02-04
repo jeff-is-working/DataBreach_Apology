@@ -155,26 +155,50 @@ export const industryPhrases = {
 export const toneModifiers = {
   deeply_apologetic: {
     emphasis: ["deeply", "sincerely", "truly", "profoundly"],
-    apology: ["We are deeply sorry", "We sincerely apologize", "We truly regret"],
+    opening: [
+      "We are deeply sorry to inform you of a data security incident that may have affected your personal information.",
+      "We sincerely apologize as we write to inform you of a recent security incident involving your data.",
+      "With profound regret, we are reaching out to notify you of a cybersecurity incident that may have involved your personal information.",
+    ],
   },
   professionally_concerned: {
     emphasis: ["promptly", "diligently", "thoroughly", "comprehensively"],
-    apology: ["We regret to inform you", "We want to make you aware", "We are informing you"],
+    opening: [
+      "We are writing to inform you of a data security incident that may have affected your personal information.",
+      "We want to make you aware of a recent security incident that may have involved some of your personal data.",
+      "We are reaching out to notify you of a cybersecurity incident we recently discovered.",
+    ],
   },
   technically_transparent: {
     emphasis: ["specifically", "technically", "precisely", "accurately"],
-    apology: ["We are disclosing", "We want to be transparent about", "We are providing details on"],
+    opening: [
+      "We are providing you with detailed information about a security incident that affected our systems.",
+      "In the interest of full transparency, we are disclosing a data security incident that may have involved your information.",
+      "We want to provide you with accurate details about a recent cybersecurity event affecting our infrastructure.",
+    ],
   },
   legally_cautious: {
     emphasis: ["potentially", "may have", "possibly", "could have"],
-    apology: ["We are notifying you pursuant to", "In compliance with notification requirements"],
+    opening: [
+      "Pursuant to applicable data breach notification laws, we are writing to inform you of a security incident.",
+      "In compliance with regulatory notification requirements, we are informing you of a data security incident that may have involved your personal information.",
+      "This notice is being provided in accordance with applicable state and federal data breach notification statutes.",
+    ],
   },
   aggressively_defensive: {
     emphasis: ["despite", "notwithstanding", "regardless of"],
-    apology: ["While this incident occurred", "Although unauthorized access was detected"],
+    opening: [
+      "Despite our robust security measures, we recently detected unauthorized access to certain systems.",
+      "Although we maintain industry-leading security protocols, we identified a security incident that we want to bring to your attention.",
+      "Notwithstanding our significant investments in cybersecurity, we experienced a security event that may have involved your data.",
+    ],
   },
   vaguely_reassuring: {
     emphasis: ["some", "certain", "limited", "particular"],
-    apology: ["We wanted to reach out", "We thought you should know", "We are sharing information"],
+    opening: [
+      "We wanted to reach out to share some information about a recent security matter.",
+      "We thought you should know about a situation involving certain data in our systems.",
+      "We are reaching out regarding a limited security incident that we recently addressed.",
+    ],
   },
 };

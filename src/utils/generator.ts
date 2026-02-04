@@ -1,6 +1,5 @@
 import type { BreachParameters, GeneratedStatement, DataType } from '../types';
 import {
-  openingPhrases,
   takingItSeriouslyPhrases,
   investigationPhrases,
   sophisticatedAttackPhrases,
@@ -97,9 +96,8 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   sections.push(`${dateStr}\n`);
   sections.push(`Dear Valued ${industry === 'healthcare' ? 'Patient' : industry === 'education' ? 'Student' : 'Customer'},\n`);
 
-  // Opening with tone modifier
-  const openingPrefix = randomPick(tone.apology);
-  sections.push(`${openingPrefix}, ${randomPick(openingPhrases).toLowerCase()}\n`);
+  // Opening statement based on tone
+  sections.push(`${randomPick(tone.opening)}\n`);
 
   // Taking it seriously
   sections.push(randomPick(takingItSeriouslyPhrases) + '\n');
