@@ -1,0 +1,8 @@
+# Robots.txt for oopsallbreaches.com
+# This is a satirical/educational site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://oopsallbreaches.com/sitemap.xml

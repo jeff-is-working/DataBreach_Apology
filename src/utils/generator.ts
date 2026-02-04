@@ -16,6 +16,16 @@ import {
 } from '../data/phrases';
 import { displayLabels } from '../data/wheelOptions';
 
+// Sanitize user input to prevent any potential issues
+function sanitizeInput(input: string): string {
+  return input
+    .replace(/[<>]/g, '') // Remove angle brackets
+    .replace(/javascript:/gi, '') // Remove javascript: protocol
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .trim()
+    .slice(0, 200); // Limit length
+}
+
 // Helper to pick random item from array
 function randomPick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -195,11 +205,24 @@ function getGreeting(industry: string): string {
 
 // Generate the main statement
 export function generateStatement(params: BreachParameters): GeneratedStatement {
-  const combo = checkCombo(params);
+  // Sanitize user-provided inputs
+  const safeCompanyName = sanitizeInput(params.companyName) || 'Acme Corporation';
+  const safeExecutiveName = params.executiveName ? sanitizeInput(params.executiveName) : undefined;
+  const safeExecutiveTitle = params.executiveTitle ? sanitizeInput(params.executiveTitle) : undefined;
+
+  // Create sanitized params for the result
+  const sanitizedParams: BreachParameters = {
+    ...params,
+    companyName: safeCompanyName,
+    executiveName: safeExecutiveName,
+    executiveTitle: safeExecutiveTitle,
+  };
+
+  const combo = checkCombo(sanitizedParams);
   const { isJackpot, jackpotType } = checkJackpot();
-  const tone = toneModifiers[params.tone];
-  const industry = params.industry;
-  const ironyScore = calculateIronyScore(params);
+  const tone = toneModifiers[sanitizedParams.tone];
+  const industry = sanitizedParams.industry;
+  const ironyScore = calculateIronyScore(sanitizedParams);
 
   // Get today's date for the statement
   const today = new Date();
@@ -229,14 +252,14 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   // What happened section
   sections.push('WHAT HAPPENED\n');
 
-  const breachDescription = displayLabels.breachType[params.breachType]?.toLowerCase() || params.breachType;
-  const discoveryTime = displayLabels.discoveryDelay[params.discoveryDelay] || 'recently';
+  const breachDescription = displayLabels.breachType[sanitizedParams.breachType]?.toLowerCase() || sanitizedParams.breachType;
+  const discoveryTime = displayLabels.discoveryDelay[sanitizedParams.discoveryDelay] || 'recently';
 
   // Add negligence context for certain breach types
   let negligenceNote = '';
-  if (params.breachType === 'unpatched_vulnerability' && params.negligenceFactors?.includes('patch_available_months')) {
+  if (sanitizedParams.breachType === 'unpatched_vulnerability' && sanitizedParams.negligenceFactors?.includes('patch_available_months')) {
     negligenceNote = ' ' + randomPick(actualNegligence.unpatched);
-  } else if (params.breachType === 'plaintext_passwords') {
+  } else if (sanitizedParams.breachType === 'plaintext_passwords') {
     negligenceNote = ' ' + randomPick(actualNegligence.plaintext);
   }
 
@@ -244,11 +267,11 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
     `Our security team identified unauthorized access to our systems ${discoveryTime}. ` +
     `The incident involved ${breachDescription.startsWith('a') || breachDescription.startsWith('an') ? '' :
       ['ransomware', 'unpatched', 'exposed', 'insider'].some(w => breachDescription.includes(w)) ? '' : 'a '}${breachDescription}` +
-    `${params.includeSophisticatedAttack ? '. ' + randomPick(sophisticatedAttackPhrases) : '.'}${negligenceNote}\n`
+    `${sanitizedParams.includeSophisticatedAttack ? '. ' + randomPick(sophisticatedAttackPhrases) : '.'}${negligenceNote}\n`
   );
 
   // Third party blame if enabled
-  if (params.includeThirdPartyBlame || params.breachType === 'third_party_vendor') {
+  if (sanitizedParams.includeThirdPartyBlame || sanitizedParams.breachType === 'third_party_vendor') {
     sections.push(randomPick(thirdPartyBlamePhrases) + '\n');
   }
 
@@ -258,12 +281,12 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   // What information was involved
   sections.push('WHAT INFORMATION WAS INVOLVED\n');
 
-  const recordCount = displayLabels.recordScale[params.affectedRecords] || params.affectedRecords;
-  const dataTypesStr = formatDataTypes(params.dataTypes);
+  const recordCount = displayLabels.recordScale[sanitizedParams.affectedRecords] || sanitizedParams.affectedRecords;
+  const dataTypesStr = formatDataTypes(sanitizedParams.dataTypes);
 
   sections.push(
     `The incident may have involved ${dataTypesStr} for ${recordCount} individuals. ` +
-    `${params.includeNoEvidenceOfMisuse ? randomPick(noEvidenceOfMisusePhrases) : ''}\n`
+    `${sanitizedParams.includeNoEvidenceOfMisuse ? randomPick(noEvidenceOfMisusePhrases) : ''}\n`
   );
 
   // What we are doing
@@ -289,7 +312,7 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
 
   // Contact information
   sections.push('FOR MORE INFORMATION\n');
-  const cleanCompanyName = params.companyName.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cleanCompanyName = safeCompanyName.toLowerCase().replace(/[^a-z0-9]/g, '');
   sections.push(
     `We have established a dedicated call center at 1-800-555-BREACH and a ` +
     `website at www.${cleanCompanyName}-incident.com ` +
@@ -300,18 +323,18 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   sections.push(randomPick(closingPhrases) + '\n');
 
   // Executive quote if enabled
-  if (params.includeExecutiveQuote && params.executiveName) {
+  if (sanitizedParams.includeExecutiveQuote && safeExecutiveName) {
     sections.push(
       `\n"${randomPick(executiveQuotes)}" ` +
-      `said ${params.executiveName}, ${params.executiveTitle || 'Chief Executive Officer'}.\n`
+      `said ${safeExecutiveName}, ${safeExecutiveTitle || 'Chief Executive Officer'}.\n`
     );
   }
 
   // Signature
   sections.push('\nSincerely,\n');
-  sections.push(params.executiveName || 'The Security Team');
-  sections.push(`\n${params.executiveTitle || 'Chief Executive Officer'}`);
-  sections.push(`\n${params.companyName}\n`);
+  sections.push(safeExecutiveName || 'The Security Team');
+  sections.push(`\n${safeExecutiveTitle || 'Chief Executive Officer'}`);
+  sections.push(`\n${safeCompanyName}\n`);
 
   // Disclaimer
   sections.push(
@@ -323,16 +346,16 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
 
   // Calculate authenticity score (how corporate does it sound?)
   let authenticityScore = 70;
-  if (params.tone === 'professionally_concerned') authenticityScore += 15;
-  if (params.tone === 'legally_cautious') authenticityScore += 10;
-  if (params.includeNoEvidenceOfMisuse) authenticityScore += 5;
-  if (params.includeSophisticatedAttack) authenticityScore += 5;
-  if (params.includeThirdPartyBlame) authenticityScore += 5;
+  if (sanitizedParams.tone === 'professionally_concerned') authenticityScore += 15;
+  if (sanitizedParams.tone === 'legally_cautious') authenticityScore += 10;
+  if (sanitizedParams.includeNoEvidenceOfMisuse) authenticityScore += 5;
+  if (sanitizedParams.includeSophisticatedAttack) authenticityScore += 5;
+  if (sanitizedParams.includeThirdPartyBlame) authenticityScore += 5;
   authenticityScore = Math.min(authenticityScore, 99);
 
   return {
     text: sections.join('\n'),
-    parameters: params,
+    parameters: sanitizedParams,
     comboTriggered: combo || jackpotType,
     isJackpot,
     authenticityScore,
@@ -342,8 +365,9 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
 
 // Generate a haiku for jackpot
 export function generateHaiku(params: BreachParameters): string {
+  const safeCompanyName = sanitizeInput(params.companyName) || 'Acme Corp';
   const haikus = [
-    `Data floating free\n${params.companyName} says sorry\nCredit monitoring`,
+    `Data floating free\n${safeCompanyName} says sorry\nCredit monitoring`,
     `Servers were breached bad\nSophisticated attack\nWe take this serious`,
     `Your SSN\nIs now somewhere on the web\nOops, our bad, truly`,
     `Third party vendor\nIs totally to blame here\nNot us, never us`,
