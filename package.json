@@ -1,0 +1,44 @@
+{
+  "name": "data-breach-apology-generator",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A satirical web application that generates corporate-style data breach apology statements",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "data-breach",
+    "apology-generator",
+    "satire",
+    "security",
+    "educational"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.3",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^9.39.2",
+    "framer-motion": "^12.31.0",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0",
+    "vite": "^7.3.1"
+  }
+}
