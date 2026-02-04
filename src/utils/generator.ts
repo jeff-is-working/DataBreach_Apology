@@ -10,6 +10,9 @@ import {
   closingPhrases,
   industryPhrases,
   toneModifiers,
+  executiveQuotes,
+  ironicSecurityClaims,
+  actualNegligence,
 } from '../data/phrases';
 import { displayLabels } from '../data/wheelOptions';
 
@@ -20,15 +23,77 @@ function randomPick<T>(arr: T[]): T {
 
 // Format data types for display
 function formatDataTypes(types: DataType[]): string {
-  const labels = types.map(t => displayLabels.dataType[t].toLowerCase());
+  const labels = types.map(t => displayLabels.dataType[t]?.toLowerCase() || t);
   if (labels.length === 1) return labels[0];
   if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
   return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`;
 }
 
-// Check for special combo conditions
+// Calculate irony score based on parameters
+function calculateIronyScore(params: BreachParameters): number {
+  let irony = 0;
+
+  // Industry-based irony
+  if (params.industry === 'security_company') irony += 40;
+  if (params.industry === 'cybersecurity_training') irony += 50;
+  if (params.industry === 'password_manager') irony += 60;
+  if (params.industry === 'credit_bureau') irony += 30;
+
+  // Breach type irony
+  if (params.breachType === 'unpatched_vulnerability') irony += 25;
+  if (params.breachType === 'plaintext_passwords') irony += 35;
+  if (params.breachType === 'default_credentials') irony += 30;
+  if (params.breachType === 'password_postit') irony += 40;
+
+  // Data type irony
+  if (params.dataTypes.includes('plaintext_password')) irony += 20;
+  if (params.dataTypes.includes('internal_security_emails')) irony += 25;
+  if (params.dataTypes.includes('how_to_secure_search')) irony += 30;
+
+  // Discovery method irony
+  if (params.discoveryDelay === 'from_news') irony += 20;
+  if (params.discoveryDelay === 'dark_web_listing') irony += 25;
+  if (params.discoveryDelay === 'hacker_invoice') irony += 35;
+  if (params.discoveryDelay === 'security_researcher') irony += 15;
+
+  // Scale irony (bigger = more ironic when combined with other factors)
+  if (['epic', 'legendary', 'all_of_them'].includes(params.affectedRecords)) {
+    irony += 10;
+  }
+
+  // Long delays are extra ironic
+  if (['years_1_2', 'years_3_plus'].includes(params.discoveryDelay)) {
+    irony += 15;
+  }
+
+  return Math.min(irony, 100);
+}
+
+// Check for special combo conditions based on real breaches
 function checkCombo(params: BreachParameters): string | undefined {
-  // Security company with massive breach = Maximum irony
+  // The Equifax Special: Credit bureau + unpatched vulnerability + massive scale
+  if (
+    params.industry === 'credit_bureau' &&
+    params.breachType === 'unpatched_vulnerability' &&
+    ['massive', 'epic', 'legendary'].includes(params.affectedRecords)
+  ) {
+    return 'The Equifax Special';
+  }
+
+  // The Facebook Oopsie: Social media + plaintext passwords
+  if (
+    params.industry === 'social_media' &&
+    (params.breachType === 'plaintext_passwords' || params.dataTypes.includes('plaintext_password'))
+  ) {
+    return 'The Facebook Oopsie';
+  }
+
+  // The LastPass Irony: Password manager breach
+  if (params.industry === 'password_manager') {
+    return 'The LastPass Special';
+  }
+
+  // Maximum Irony: Security company or cybersecurity training gets breached
   if (
     (params.industry === 'security_company' || params.industry === 'cybersecurity_training') &&
     ['massive', 'epic', 'legendary', 'all_of_them'].includes(params.affectedRecords)
@@ -36,7 +101,28 @@ function checkCombo(params: BreachParameters): string | undefined {
     return 'Maximum Irony Mode';
   }
 
-  // Long delay with SSNs = Extra legal language
+  // The Target Special: Third-party vendor compromise in retail
+  if (params.industry === 'retail' && params.breachType === 'third_party_vendor') {
+    return 'The Target Special';
+  }
+
+  // The Marriott Marathon: Hospitality + years-long breach
+  if (
+    params.industry === 'hospitality' &&
+    ['years_1_2', 'years_3_plus'].includes(params.discoveryDelay)
+  ) {
+    return 'The Marriott Marathon';
+  }
+
+  // The Yahoo Trilogy: All records + years to disclose
+  if (
+    params.affectedRecords === 'all_of_them' &&
+    ['years_1_2', 'years_3_plus'].includes(params.discoveryDelay)
+  ) {
+    return 'The Yahoo Trilogy';
+  }
+
+  // Legal Nightmare Mode: Long delay with SSNs
   if (
     ['years_1_2', 'years_3_plus'].includes(params.discoveryDelay) &&
     params.dataTypes.includes('ssn')
@@ -44,34 +130,62 @@ function checkCombo(params: BreachParameters): string | undefined {
     return 'Legal Nightmare Mode';
   }
 
-  // Kids toy with medical records = Confusion
-  if (params.industry === 'toys' && params.dataTypes.includes('medical')) {
-    return 'Confusion Template';
+  // COPPA Catastrophe: Kids toy with sensitive data
+  if (params.industry === 'toys' && (params.dataTypes.includes('medical') || params.dataTypes.includes('location_history'))) {
+    return 'COPPA Catastrophe';
   }
 
-  // Learned from news = Extra embarrassing
-  if (params.discoveryDelay === 'from_news' || params.discoveryDelay === 'hacker_invoice') {
+  // Ashley Madison Mode: Dating site breach
+  if (params.industry === 'dating' && params.dataTypes.includes('private_messages')) {
+    return 'Ashley Madison Mode';
+  }
+
+  // Public Humiliation Mode: Found out from external sources
+  if (['from_news', 'dark_web_listing', 'hacker_invoice', 'security_researcher'].includes(params.discoveryDelay)) {
     return 'Public Humiliation Mode';
+  }
+
+  // The 23andMe Special: DNA data breach
+  if (params.dataTypes.includes('dna')) {
+    return 'The 23andMe Special';
   }
 
   return undefined;
 }
 
-// Check for jackpot (0.1% chance or forced by params)
+// Check for jackpot scenarios (rare famous breach recreations)
 function checkJackpot(): { isJackpot: boolean; jackpotType?: string } {
   const roll = Math.random();
-  if (roll < 0.001) {
+  if (roll < 0.02) { // 2% chance for demo purposes
     const jackpots = [
       'The Equifax Special',
-      'The Honest One',
+      'The Facebook Oopsie',
+      'The Yahoo Trilogy',
+      'The Target Classic',
+      'The Marriott Marathon',
+      'The T-Mobile Repeat',
+      'The LastPass Irony',
+      'The Honest One', // Rare: actually transparent apology
       'The Non-Apology Apology',
-      'The Overkill',
-      'The Tweet',
       'The Haiku',
     ];
     return { isJackpot: true, jackpotType: randomPick(jackpots) };
   }
   return { isJackpot: false };
+}
+
+// Get appropriate greeting based on industry
+function getGreeting(industry: string): string {
+  const greetings: Record<string, string> = {
+    healthcare: 'Patient',
+    education: 'Student',
+    government: 'Citizen',
+    hospitality: 'Guest',
+    gaming: 'Player',
+    dating: 'Member',
+    social_media: 'User',
+  };
+  return greetings[industry] || 'Customer';
 }
 
 // Generate the main statement
@@ -80,6 +194,7 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   const { isJackpot, jackpotType } = checkJackpot();
   const tone = toneModifiers[params.tone];
   const industry = params.industry;
+  const ironyScore = calculateIronyScore(params);
 
   // Get today's date for the statement
   const today = new Date();
@@ -94,28 +209,41 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
 
   // Header
   sections.push(`${dateStr}\n`);
-  sections.push(`Dear Valued ${industry === 'healthcare' ? 'Patient' : industry === 'education' ? 'Student' : 'Customer'},\n`);
+  sections.push(`Dear Valued ${getGreeting(industry)},\n`);
 
   // Opening statement based on tone
   sections.push(`${randomPick(tone.opening)}\n`);
 
-  // Taking it seriously
-  sections.push(randomPick(takingItSeriouslyPhrases) + '\n');
+  // Taking it seriously (with extra irony if applicable)
+  if (ironyScore > 50) {
+    sections.push(randomPick(ironicSecurityClaims) + ' ' + randomPick(takingItSeriouslyPhrases) + '\n');
+  } else {
+    sections.push(randomPick(takingItSeriouslyPhrases) + '\n');
+  }
 
   // What happened section
   sections.push('WHAT HAPPENED\n');
 
-  const breachDescription = displayLabels.breachType[params.breachType].toLowerCase();
-  const discoveryTime = displayLabels.discoveryDelay[params.discoveryDelay];
+  const breachDescription = displayLabels.breachType[params.breachType]?.toLowerCase() || params.breachType;
+  const discoveryTime = displayLabels.discoveryDelay[params.discoveryDelay] || 'recently';
+
+  // Add negligence context for certain breach types
+  let negligenceNote = '';
+  if (params.breachType === 'unpatched_vulnerability' && params.negligenceFactors?.includes('patch_available_months')) {
+    negligenceNote = ' ' + randomPick(actualNegligence.unpatched);
+  } else if (params.breachType === 'plaintext_passwords') {
+    negligenceNote = ' ' + randomPick(actualNegligence.plaintext);
+  }
 
   sections.push(
     `Our security team identified unauthorized access to our systems ${discoveryTime}. ` +
-    `The incident involved ${breachDescription === 'ransomware attack' ? 'a ' : ''}${breachDescription}` +
-    `${params.includeSophisticatedAttack ? '. ' + randomPick(sophisticatedAttackPhrases) : '.'}\n`
+    `The incident involved ${breachDescription.startsWith('a') || breachDescription.startsWith('an') ? '' :
+      ['ransomware', 'unpatched', 'exposed', 'insider'].some(w => breachDescription.includes(w)) ? '' : 'a '}${breachDescription}` +
+    `${params.includeSophisticatedAttack ? '. ' + randomPick(sophisticatedAttackPhrases) : '.'}${negligenceNote}\n`
   );
 
   // Third party blame if enabled
-  if (params.includeThirdPartyBlame) {
+  if (params.includeThirdPartyBlame || params.breachType === 'third_party_vendor') {
     sections.push(randomPick(thirdPartyBlamePhrases) + '\n');
   }
 
@@ -125,7 +253,7 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   // What information was involved
   sections.push('WHAT INFORMATION WAS INVOLVED\n');
 
-  const recordCount = displayLabels.recordScale[params.affectedRecords];
+  const recordCount = displayLabels.recordScale[params.affectedRecords] || params.affectedRecords;
   const dataTypesStr = formatDataTypes(params.dataTypes);
 
   sections.push(
@@ -138,9 +266,11 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   sections.push(randomPick(securityImprovementPhrases) + ' ');
 
   // Add industry-specific phrase
-  const industrySpecific = industryPhrases[industry];
-  if (industrySpecific) {
+  const industrySpecific = industryPhrases[industry as keyof typeof industryPhrases];
+  if (industrySpecific && industrySpecific.length > 0) {
     sections.push(`We are implementing ${randomPick(industrySpecific)} to better protect your information.\n`);
+  } else {
+    sections.push('We are implementing enhanced security measures to better protect your information.\n');
   }
 
   // What you can do
@@ -154,9 +284,10 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
 
   // Contact information
   sections.push('FOR MORE INFORMATION\n');
+  const cleanCompanyName = params.companyName.toLowerCase().replace(/[^a-z0-9]/g, '');
   sections.push(
     `We have established a dedicated call center at 1-800-555-BREACH and a ` +
-    `website at www.${params.companyName.toLowerCase().replace(/\s+/g, '')}-incident.com ` +
+    `website at www.${cleanCompanyName}-incident.com ` +
     `for additional information and resources.\n`
   );
 
@@ -166,8 +297,8 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   // Executive quote if enabled
   if (params.includeExecutiveQuote && params.executiveName) {
     sections.push(
-      `\n"${randomPick(takingItSeriouslyPhrases)} We are committed to earning back your trust," ` +
-      `said ${params.executiveName}, ${params.executiveTitle || 'CEO'}.\n`
+      `\n"${randomPick(executiveQuotes)}" ` +
+      `said ${params.executiveName}, ${params.executiveTitle || 'Chief Executive Officer'}.\n`
     );
   }
 
@@ -200,6 +331,7 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
     comboTriggered: combo || jackpotType,
     isJackpot,
     authenticityScore,
+    ironyScore,
   };
 }
 
@@ -211,13 +343,16 @@ export function generateHaiku(params: BreachParameters): string {
     `Your SSN\nIs now somewhere on the web\nOops, our bad, truly`,
     `Third party vendor\nIs totally to blame here\nNot us, never us`,
     `Passwords were hashed... maybe\nPlease change them just in case though\nThanks for your patience`,
+    `Patch was available\nFor many months before breach\nWe take this serious`,
+    `Plaintext passwords stored\nFor years in our database\nWe value your trust`,
+    `Found out from the news\nThat our data was stolen\nOops, our bad, sorry`,
   ];
   return randomPick(haikus);
 }
 
 // Generate tweet-length version
 export function generateTweet(params: BreachParameters): string {
-  const count = displayLabels.recordScale[params.affectedRecords];
+  const count = displayLabels.recordScale[params.affectedRecords] || params.affectedRecords;
   return `We regret to inform you of a security incident affecting ${count} users. ` +
     `We take security seriously. Free credit monitoring: link.co/sorry #DataBreach #WereSorry`;
 }

@@ -1,4 +1,6 @@
 // Common phrases extracted from real data breach apologies
+// Sources: Equifax, Target, Yahoo, Marriott, T-Mobile, Facebook, and hundreds of others
+
 export const openingPhrases = [
   "We are writing to inform you of a data security incident that may have affected your personal information.",
   "We recently discovered a cybersecurity incident that may have involved some of your personal information.",
@@ -7,12 +9,18 @@ export const openingPhrases = [
   "We regret to inform you that we recently became aware of a security incident affecting our systems.",
 ];
 
+// The classic "we take security seriously" variants - the most mocked phrase in breach notifications
 export const takingItSeriouslyPhrases = [
   "We take the privacy and security of your information very seriously.",
   "The security of our customers' information is a top priority.",
   "Protecting the personal information of our customers is of the utmost importance to us.",
   "We are deeply committed to safeguarding the information you entrust to us.",
   "We understand the trust you place in us with your personal information.",
+  "We take security very seriously at [COMPANY].",
+  "Your privacy and security are paramount to us.",
+  "We have always been committed to protecting your personal information.",
+  "Security has always been a core value of our organization.",
+  "We maintain industry-leading security practices to protect your data.",
 ];
 
 export const investigationPhrases = [
@@ -21,70 +29,182 @@ export const investigationPhrases = [
   "We are working closely with law enforcement and third-party security experts to investigate this matter.",
   "We have retained a leading cybersecurity firm to assist in our investigation and remediation efforts.",
   "Our security team, along with external experts, is working diligently to understand the full scope of this incident.",
+  "We promptly initiated a comprehensive forensic investigation.",
+  "We have engaged Mandiant/CrowdStrike/[SECURITY FIRM] to assist with our investigation.",
+  "Federal law enforcement has been notified and is actively investigating.",
+  "We are cooperating fully with law enforcement authorities.",
+  "Our investigation is ongoing, and we will provide updates as appropriate.",
 ];
 
+// The "sophisticated attack" defense - used to deflect blame
 export const sophisticatedAttackPhrases = [
   "This was a sophisticated criminal attack on our systems.",
   "The unauthorized access was the result of a highly sophisticated cyber attack.",
   "This incident was perpetrated by sophisticated threat actors using advanced techniques.",
   "Our systems were targeted by a determined and sophisticated adversary.",
   "The attack utilized advanced methods that evaded our security controls.",
+  "This was a targeted attack by highly skilled and organized criminals.",
+  "The threat actors demonstrated advanced persistent threat (APT) capabilities.",
+  "We were targeted by a nation-state level adversary.",
+  "The attackers used novel techniques not previously seen in the wild.",
+  "Despite our robust security measures, these sophisticated actors found a way in.",
 ];
 
+// Third-party blame - always a vendor's fault
 export const thirdPartyBlamePhrases = [
   "The incident was caused by unauthorized access to a third-party vendor's systems.",
   "A vendor that provides services to us experienced a security incident that affected our data.",
   "The breach originated from a compromised third-party system with access to our network.",
   "One of our service providers experienced a security incident that may have exposed your information.",
   "The unauthorized access occurred through a third-party platform used to support our services.",
+  "We recently learned that a vendor experienced a security incident affecting data they process on our behalf.",
+  "This incident did not involve a direct attack on our systems, but rather a third-party provider.",
+  "The vulnerability was in software provided by an external vendor.",
+  "We are working with our vendor to understand the full scope of their security incident.",
+  "We are reviewing all third-party relationships in light of this incident.",
 ];
 
+// The "no evidence of misuse" disclaimer - legally careful language
 export const noEvidenceOfMisusePhrases = [
   "At this time, we have no evidence that your information has been misused.",
   "We are not aware of any misuse of your personal information as a result of this incident.",
   "To date, there is no indication that your data has been used for fraudulent purposes.",
   "Our investigation has not found evidence that any personal information has been misused.",
   "While your data may have been accessed, we have seen no evidence of identity theft or fraud.",
+  "We have no reason to believe your information has been misused at this time.",
+  "There is currently no evidence of unauthorized use of your personal information.",
+  "We are not aware of any reports of identity theft related to this incident.",
+  "Our monitoring has not detected any suspicious activity involving your account.",
+  "At present, we have no indication that any personal data has been exploited.",
 ];
 
+// Vague security improvement promises
 export const securityImprovementPhrases = [
   "We have implemented additional security measures to protect against similar incidents in the future.",
   "We are taking steps to further enhance our security protocols and systems.",
   "We are committed to learning from this incident and strengthening our security posture.",
   "We have added enhanced security controls and continue to review and improve our safeguards.",
   "We are investing in additional security measures and employee training to prevent future incidents.",
+  "We have implemented additional safeguards to prevent this type of incident from recurring.",
+  "We are enhancing our technical and organizational measures to protect your data.",
+  "We have accelerated previously planned security initiatives.",
+  "We are conducting a comprehensive review of our security infrastructure.",
+  "We have engaged additional security resources to strengthen our defenses.",
 ];
 
+// Credit monitoring offers - the standard peace offering
 export const creditMonitoringPhrases = [
   "Out of an abundance of caution, we are offering you complimentary credit monitoring services.",
   "We are providing affected individuals with free credit monitoring and identity protection services.",
   "To help protect your identity, we are offering 12 months of complimentary credit monitoring.",
   "As an added precaution, we are offering free identity theft protection services.",
   "We have arranged for complimentary credit monitoring through [PROVIDER] for the next 24 months.",
+  "We are offering you two years of free credit monitoring and identity restoration services.",
+  "Enrollment information for complimentary identity protection services is enclosed.",
+  "You are eligible for free credit monitoring, identity theft insurance, and fraud resolution services.",
+  "We have partnered with [PROVIDER] to offer you comprehensive identity protection at no cost.",
+  "Please find enclosed instructions for enrolling in our complimentary protection services.",
 ];
 
+// Closing phrases - the non-apology apology
 export const closingPhrases = [
   "We sincerely apologize for any inconvenience this may cause.",
   "We deeply regret any concern this incident may have caused you.",
   "We are truly sorry for any worry or inconvenience resulting from this situation.",
   "Please accept our sincere apologies for this incident.",
   "We understand this news may be concerning, and we apologize for any stress this may cause.",
+  "We recognize this incident may cause concern, and we apologize for any inconvenience.",
+  "We remain committed to earning your trust.",
+  "We value your relationship with us and are committed to protecting your information.",
+  "Thank you for your patience and understanding as we work through this matter.",
+  "We appreciate your continued trust in our organization.",
 ];
 
+// "Abundance of caution" phrases - used to minimize the situation
 export const abundanceOfCautionPhrases = [
   "Out of an abundance of caution",
   "As a precautionary measure",
   "While we have no evidence of misuse",
   "Although we believe the risk is low",
   "To be proactive in protecting your interests",
+  "In an abundance of caution",
+  "As a proactive step",
+  "While we have found no evidence of unauthorized use",
+  "To err on the side of caution",
+  "As a protective measure",
 ];
 
+// Timeline obfuscation - vague about when things happened
 export const timelineObfuscationPhrases = [
   "Upon discovering the incident",
   "After a comprehensive investigation",
   "Following a thorough review of our systems",
   "Once we completed our initial assessment",
   "After careful analysis by our security team",
+  "When we became aware of the situation",
+  "After completing our forensic investigation",
+  "Following notification from [THIRD PARTY]",
+  "Upon learning of unauthorized access",
+  "After confirming the scope of the incident",
+];
+
+// NEW: Real ironic phrases - when companies claim good security but clearly didn't have it
+export const ironicSecurityClaims = [
+  "We maintain industry-leading security practices.",
+  "Security is embedded in everything we do.",
+  "We employ multiple layers of security controls.",
+  "Our security program meets or exceeds industry standards.",
+  "We continuously monitor our systems for threats.",
+  "We have dedicated security teams working around the clock.",
+  "Our systems are regularly audited by independent third parties.",
+  "We use state-of-the-art encryption technologies.",
+  "We follow security best practices recommended by experts.",
+  "Our security program has been certified by [FRAMEWORK].",
+];
+
+// NEW: What they actually did wrong (for irony mode)
+export const actualNegligence = {
+  unpatched: [
+    "The vulnerability exploited in this incident had a patch available since [DATE].",
+    "A security update addressing this issue was released [X] months prior to the incident.",
+    "We are accelerating our patch management processes.",
+    "We are reviewing our vulnerability management procedures.",
+  ],
+  plaintext: [
+    "Certain passwords were stored in a readable format.",
+    "Some credentials were logged in plaintext as part of a debugging process.",
+    "A legacy system stored passwords without proper hashing.",
+    "We are updating our password storage mechanisms.",
+  ],
+  noMFA: [
+    "The affected system did not require multi-factor authentication.",
+    "We are implementing additional authentication requirements.",
+    "Enhanced authentication controls are being deployed.",
+  ],
+  excessiveAccess: [
+    "The compromised credentials had broader access than necessary.",
+    "We are implementing more granular access controls.",
+    "We are reviewing all privileged access arrangements.",
+  ],
+  dataRetention: [
+    "Some of the affected data had been retained longer than necessary.",
+    "We are reviewing our data retention practices.",
+    "We are implementing more aggressive data minimization policies.",
+  ],
+};
+
+// NEW: Executive quotes - hollow promises from leadership
+export const executiveQuotes = [
+  "The security of our customers' data is my top priority.",
+  "I want to personally apologize for any concern this has caused.",
+  "We are fully committed to making this right.",
+  "I take full responsibility for ensuring this doesn't happen again.",
+  "Our customers' trust is everything to us.",
+  "We will emerge from this stronger and more secure.",
+  "I have directed all necessary resources to address this matter.",
+  "Security is, and will remain, job one for our entire organization.",
+  "We are laser-focused on protecting your information.",
+  "I am personally overseeing our response to this incident.",
 ];
 
 // Industry-specific phrases
@@ -94,30 +214,63 @@ export const industryPhrases = {
     "protected health information (PHI)",
     "medical record security",
     "healthcare data protection",
+    "patient privacy protections",
+    "healthcare information safeguards",
   ],
   financial: [
     "financial account security",
     "banking information protection",
     "regulatory compliance requirements",
     "financial data safeguards",
+    "PCI DSS compliance",
+    "financial services security standards",
+  ],
+  credit_bureau: [
+    "consumer credit information",
+    "credit file security",
+    "consumer reporting protections",
+    "credit monitoring safeguards",
+    "consumer data protection",
   ],
   retail: [
     "payment card industry standards",
     "point-of-sale security",
     "customer transaction protection",
     "retail data security measures",
+    "PCI compliance requirements",
   ],
   technology: [
     "advanced encryption protocols",
     "multi-factor authentication",
     "zero-trust security architecture",
     "continuous security monitoring",
+    "DevSecOps practices",
+  ],
+  social_media: [
+    "user privacy protections",
+    "account security measures",
+    "platform integrity safeguards",
+    "content security protocols",
+    "user data protection",
+  ],
+  telecom: [
+    "customer proprietary network information (CPNI)",
+    "telecommunications security standards",
+    "subscriber data protection",
+    "network security protocols",
+  ],
+  hospitality: [
+    "guest information security",
+    "reservation system protection",
+    "loyalty program data safeguards",
+    "hospitality industry standards",
   ],
   government: [
     "federal security guidelines",
     "government data protection protocols",
     "public sector security standards",
     "citizen data privacy measures",
+    "FedRAMP compliance",
   ],
   education: [
     "FERPA compliance measures",
@@ -125,29 +278,46 @@ export const industryPhrases = {
     "educational record security",
     "academic information safeguards",
   ],
+  gaming: [
+    "player account security",
+    "gaming platform protection",
+    "virtual asset safeguards",
+    "player data privacy",
+  ],
   dating: [
     "user privacy protection",
     "personal profile security",
     "member data confidentiality",
     "relationship data protection",
+    "intimate information safeguards",
   ],
   toys: [
     "children's data protection",
     "COPPA compliance measures",
     "family information security",
     "child safety protocols",
+    "parental consent requirements",
   ],
   security_company: [
     "industry-leading security practices",
     "advanced threat detection",
     "security-first architecture",
     "expert security protocols",
+    "world-class security measures",
   ],
   cybersecurity_training: [
     "security awareness protocols",
     "professional security standards",
     "expert-level protection measures",
     "industry best practices",
+    "security certification standards",
+  ],
+  password_manager: [
+    "zero-knowledge architecture",
+    "end-to-end encryption",
+    "vault security protocols",
+    "master password protection",
+    "secure credential storage",
   ],
 };
 
@@ -200,5 +370,41 @@ export const toneModifiers = {
       "We thought you should know about a situation involving certain data in our systems.",
       "We are reaching out regarding a limited security incident that we recently addressed.",
     ],
+  },
+};
+
+// NEW: Famous breach references for jackpot mode
+export const famousBreachReferences = {
+  equifax: {
+    settlement: "$700 million",
+    records: "147 million",
+    irony: "patch was available for 2+ months",
+    disclosure_delay: "6 weeks",
+  },
+  facebook: {
+    settlement: "€91 million",
+    records: "600 million passwords",
+    irony: "stored in plaintext since 2012",
+    employees_with_access: "20,000+",
+  },
+  yahoo: {
+    records: "3 billion",
+    irony: "took 3 years to disclose",
+    discovery: "during Verizon acquisition",
+  },
+  target: {
+    settlement: "$18.5 million",
+    records: "40 million credit cards",
+    irony: "HVAC vendor credentials",
+  },
+  marriott: {
+    records: "500 million",
+    irony: "breach started in 2014, discovered in 2018",
+    duration: "4 years undetected",
+  },
+  tmobile: {
+    settlement: "$350 million",
+    records: "76 million",
+    irony: "their 5th major breach",
   },
 };
