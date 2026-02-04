@@ -1,10 +1,11 @@
 # Security Policy for oopsallbreaches.com
 # This file follows the security.txt standard (RFC 9116)
 
+Contact: mailto:contact@oopsallbreaches.com
 Contact: https://github.com/jeff-is-working/DataBreach_Apology/issues
 Expires: 2027-02-03T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://oopsallbreaches.com/.well-known/security.txt
 
 # This is a satirical/educational static site with no backend or user data storage.
-# If you find a security issue, please report it via GitHub Issues.
+# If you find a security issue, please report it via email or GitHub Issues.
