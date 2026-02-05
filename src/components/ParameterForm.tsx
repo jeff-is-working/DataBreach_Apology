@@ -71,10 +71,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Company Name */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="company-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Company Name
         </label>
         <input
+          id="company-name"
           type="text"
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}
@@ -85,10 +86,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Breach Type */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="breach-type" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Type of Breach
         </label>
         <select
+          id="breach-type"
           value={breachType}
           onChange={(e) => setBreachType(e.target.value as BreachType)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-corporate-blue dark:bg-gray-700 dark:text-white"
@@ -121,10 +123,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Industry */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="industry" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Industry
         </label>
         <select
+          id="industry"
           value={industry}
           onChange={(e) => setIndustry(e.target.value as Industry)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-corporate-blue dark:bg-gray-700 dark:text-white"
@@ -137,10 +140,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Affected Records */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="affected-records" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Number of Affected Records
         </label>
         <select
+          id="affected-records"
           value={affectedRecords}
           onChange={(e) => setAffectedRecords(e.target.value as RecordScale)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-corporate-blue dark:bg-gray-700 dark:text-white"
@@ -153,10 +157,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Discovery Delay */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="discovery-delay" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Time to Discovery
         </label>
         <select
+          id="discovery-delay"
           value={discoveryDelay}
           onChange={(e) => setDiscoveryDelay(e.target.value as DiscoveryDelay)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-corporate-blue dark:bg-gray-700 dark:text-white"
@@ -169,10 +174,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
 
       {/* Tone */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="tone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Tone
         </label>
         <select
+          id="tone"
           value={tone}
           onChange={(e) => setTone(e.target.value as Tone)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-corporate-blue dark:bg-gray-700 dark:text-white"
@@ -298,10 +304,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
       {includeExecutiveQuote && (
         <div className="space-y-3 pl-4 border-l-2 border-corporate-blue dark:border-blue-400">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="executive-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Executive Name
             </label>
             <input
+              id="executive-name"
               type="text"
               value={executiveName}
               onChange={(e) => setExecutiveName(e.target.value)}
@@ -309,10 +316,11 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="executive-title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Executive Title
             </label>
             <input
+              id="executive-title"
               type="text"
               value={executiveTitle}
               onChange={(e) => setExecutiveTitle(e.target.value)}
