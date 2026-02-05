@@ -117,6 +117,7 @@ export interface BreachParameters {
   includeThirdPartyBlame: boolean;
   includeSophisticatedAttack: boolean;
   includeNoEvidenceOfMisuse: boolean;
+  includeInternBlame: boolean;
   includeExecutiveQuote: boolean;
   executiveName?: string;
   executiveTitle?: string;

@@ -191,6 +191,7 @@ export function generateRandomParameters(): BreachParameters {
     includeThirdPartyBlame: Math.random() > (0.6 - absurdityBoost),
     includeSophisticatedAttack: Math.random() > (0.5 - absurdityBoost),
     includeNoEvidenceOfMisuse: Math.random() > 0.3,
+    includeInternBlame: Math.random() > (0.85 - absurdityBoost), // 15% chance, higher on absurd days
     includeExecutiveQuote: Math.random() > 0.5,
     executiveName: generateExecutiveName(),
     executiveTitle: generateExecutiveTitle(),

@@ -4,6 +4,7 @@ import {
   investigationPhrases,
   sophisticatedAttackPhrases,
   thirdPartyBlamePhrases,
+  internBlamePhrases,
   noEvidenceOfMisusePhrases,
   securityImprovementPhrases,
   creditMonitoringPhrases,
@@ -301,6 +302,11 @@ export function generateStatement(params: BreachParameters): GeneratedStatement 
   // Third party blame if enabled
   if (sanitizedParams.includeThirdPartyBlame || sanitizedParams.breachType === 'third_party_vendor') {
     sections.push(randomPick(thirdPartyBlamePhrases) + '\n');
+  }
+
+  // Intern blame if enabled
+  if (sanitizedParams.includeInternBlame) {
+    sections.push(randomPick(internBlamePhrases) + '\n');
   }
 
   // Investigation

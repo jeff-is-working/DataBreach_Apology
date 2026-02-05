@@ -24,6 +24,7 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
   const [includeThirdPartyBlame, setIncludeThirdPartyBlame] = useState(false);
   const [includeSophisticatedAttack, setIncludeSophisticatedAttack] = useState(true);
   const [includeNoEvidenceOfMisuse, setIncludeNoEvidenceOfMisuse] = useState(true);
+  const [includeInternBlame, setIncludeInternBlame] = useState(false);
   const [includeExecutiveQuote, setIncludeExecutiveQuote] = useState(false);
   const [executiveName, setExecutiveName] = useState('John Smith');
   const [executiveTitle, setExecutiveTitle] = useState('Chief Executive Officer');
@@ -53,6 +54,7 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
       includeThirdPartyBlame,
       includeSophisticatedAttack,
       includeNoEvidenceOfMisuse,
+      includeInternBlame,
       includeExecutiveQuote,
       executiveName: includeExecutiveQuote ? executiveName : undefined,
       executiveTitle: includeExecutiveQuote ? executiveTitle : undefined,
@@ -261,6 +263,15 @@ export function ParameterForm({ onGenerate }: ParameterFormProps) {
               className="rounded border-gray-300 text-corporate-blue focus:ring-corporate-blue"
             />
             <span className="text-sm text-gray-700 dark:text-gray-300">Third-party blame assignment</span>
+          </label>
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={includeInternBlame}
+              onChange={(e) => setIncludeInternBlame(e.target.checked)}
+              className="rounded border-gray-300 text-yellow-500 focus:ring-yellow-500"
+            />
+            <span className="text-sm text-gray-700 dark:text-gray-300">"The intern did it" blame</span>
           </label>
           <label className="flex items-center space-x-2 cursor-pointer">
             <input

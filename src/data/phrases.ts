@@ -50,6 +50,18 @@ export const sophisticatedAttackPhrases = [
   "Despite our robust security measures, these sophisticated actors found a way in.",
 ];
 
+// Intern blame - the classic scapegoat
+export const internBlamePhrases = [
+  "The incident was traced to actions taken by a temporary team member who is no longer with the company.",
+  "An individual in a junior capacity inadvertently made configuration changes outside of normal protocols.",
+  "We have identified that a summer intern made unauthorized modifications to our security settings.",
+  "The root cause has been attributed to a trainee who operated outside their designated permissions.",
+  "A temporary contractor with limited experience inadvertently exposed the affected systems.",
+  "Our investigation revealed that an entry-level employee bypassed standard security procedures.",
+  "The incident originated from an unsanctioned action by a team member during their probationary period.",
+  "A well-meaning but inexperienced junior staff member made changes without proper oversight.",
+];
+
 // Third-party blame - always a vendor's fault
 export const thirdPartyBlamePhrases = [
   "The incident was caused by unauthorized access to a third-party vendor's systems.",
